@@ -1,0 +1,268 @@
+/* Estilos específicos para o Painel Administrativo de Reservas */
+.admin-body {
+  background-color: #F7F5F2;
+}
+
+.admin-header {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.2rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-title-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-badge {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-full);
+}
+
+.admin-container {
+  max-width: 1300px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* Cards de Estatísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-card-info h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.stat-card-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.stat-icon.total { background: #EFEFEF; color: #4F4F4F; }
+.stat-icon.pendente { background: #FEF3C7; color: #D97706; }
+.stat-icon.confirmado { background: #D1FAE5; color: #059669; }
+.stat-icon.concluido { background: #E0E7FF; color: #4338CA; }
+
+/* Barra de Filtros e Busca */
+.table-controls {
+  background: #FFFFFF;
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.status-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #F1ECE6;
+  color: var(--color-text-muted);
+  border: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.filter-chip:hover, .filter-chip.active {
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-input {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  outline: none;
+  width: 260px;
+}
+
+.search-input:focus {
+  border-color: var(--color-primary);
+}
+
+/* Tabela de Reservas */
+.table-wrapper {
+  background: #FFFFFF;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.reservas-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+.reservas-table th {
+  background: #FAF8F5;
+  padding: 1rem 1.2rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.reservas-table td {
+  padding: 1.1rem 1.2rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  vertical-align: middle;
+}
+
+.reservas-table tr:hover td {
+  background-color: #FCFAF8;
+}
+
+.client-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-name {
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.client-email {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+.badge-status {
+  display: inline-block;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.badge-pendente {
+  background: #FEF3C7;
+  color: #B45309;
+}
+
+.badge-confirmado {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.badge-concluido {
+  background: #E0E7FF;
+  color: #3730A3;
+}
+
+.badge-cancelado {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+/* Ações */
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-table-action {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: var(--transition);
+}
+
+.btn-table-action:hover {
+  background: var(--color-surface-soft);
+  border-color: var(--color-primary);
+}
+
+.btn-whatsapp-sm {
+  background: #25D366;
+  color: #FFFFFF;
+  border: none;
+  font-weight: 600;
+}
+
+.btn-whatsapp-sm:hover {
+  background: #1EBE5D;
+}
+
+.status-select {
+  padding: 0.35rem 0.5rem;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: #FFFFFF;
+  cursor: pointer;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--color-text-muted);
+}

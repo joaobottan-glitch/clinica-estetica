@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Login Administrativo | Estética Duda Nova Mutum{% endblock %}
+
+{% block content %}
+<div style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2rem 1.5rem; background: linear-gradient(135deg, #FCFAF8 0%, #F6F3EE 100%);">
+  
+  <div style="max-width: 440px; width: 100%; background: #FFFFFF; border-radius: var(--radius-lg); border: 1px solid var(--color-border); box-shadow: var(--shadow-lg); padding: 3rem 2.5rem; position: relative;">
+    
+    <!-- Header do Card de Login -->
+    <div style="text-align: center; margin-bottom: 2.2rem;">
+      <a href="{{ url_for('index') }}" style="display: inline-block; margin-bottom: 0.8rem;">
+        <span style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; color: var(--color-text-main); display: block;">Estética Duda</span>
+        <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2.5px; color: var(--color-primary); font-weight: 600;">Painel de Gestão • Nova Mutum</span>
+      </a>
+      <h2 style="font-size: 1.35rem; color: var(--color-text-main); font-weight: 600; margin-top: 0.5rem;">Acesso Restrito</h2>
+      <p style="font-size: 0.88rem; color: var(--color-text-muted);">Informe suas credenciais para gerenciar os agendamentos</p>
+    </div>
+
+    <!-- Alertas Flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div style="margin-bottom: 1.5rem; padding: 0.85rem 1rem; border-radius: var(--radius-md); font-size: 0.88rem; background: {% if category == 'error' %}#FEE2E2; color: #991B1B; border: 1px solid #FCA5A5;{% elif category == 'warning' %}#FEF3C7; color: #92400E; border: 1px solid #FCD34D;{% else %}#D1FAE5; color: #065F46; border: 1px solid #6EE7B7;{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Formulário de Login -->
+    <form action="{{ url_for('admin_login') }}" method="POST">
+      <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
+
+      <div style="margin-bottom: 1.3rem;">
+        <label for="usuario" style="display: block; font-size: 0.88rem; font-weight: 600; color: var(--color-text-main); margin-bottom: 0.4rem;">
+          E-mail de Acesso
+        </label>
+        <input 
+          type="email" 
+          id="usuario" 
+          name="usuario" 
+          class="form-control" 
+          placeholder="seuemail@exemplo.com" 
+          required 
+          autofocus
+          style="width: 100%; box-sizing: border-box;"
+        >
+      </div>
+
+      <div style="margin-bottom: 1.8rem;">
+        <label for="senha" style="display: block; font-size: 0.88rem; font-weight: 600; color: var(--color-text-main); margin-bottom: 0.4rem;">
+          Senha
+        </label>
+        <input 
+          type="password" 
+          id="senha" 
+          name="senha" 
+          class="form-control" 
+          placeholder="Digite sua senha..." 
+          required 
+          style="width: 100%; box-sizing: border-box;"
+        >
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem; font-size: 1rem; border-radius: var(--radius-md);">
+        Entrar no Painel
+      </button>
+
+      <div style="text-align: center; margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--color-border-subtle);">
+        <a href="{{ url_for('index') }}" style="font-size: 0.85rem; color: var(--color-text-muted); text-decoration: underline;">
+          ← Voltar para a Landing Page
+        </a>
+      </div>
+    </form>
+
+  </div>
+
+  <p style="font-size: 0.78rem; color: #A8A09B; margin-top: 1.5rem;">
+    🔒 Conexão segura • Estética Duda Nova Mutum
+  </p>
+</div>
+{% endblock %}

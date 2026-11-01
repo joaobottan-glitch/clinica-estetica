@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}Painel de Reservas & Agendamentos | Estética Duda Nova Mutum{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block body_class %}admin-body{% endblock %}
+
+{% block content %}
+<!-- Topbar Administrativa -->
+<header class="admin-header">
+  <div class="admin-title-area">
+    <a href="{{ url_for('index') }}" style="font-size: 1.2rem; font-weight: 700; color: var(--color-text-main);">
+      Estética Duda
+    </a>
+    <span class="admin-badge">Painel de Gestão</span>
+    <span style="font-size: 0.85rem; color: var(--color-text-light);">• Nova Mutum - MT</span>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <span style="font-size: 0.85rem; color: var(--color-text-muted);">
+      👤 <strong>{{ session.get('admin_usuario', 'eduardacamargo77@hotmail.com') }}</strong>
+    </span>
+    <a href="{{ url_for('index') }}" class="btn btn-outline" style="padding: 0.45rem 1rem; font-size: 0.82rem;">
+      Ver Landing Page
+    </a>
+    <a href="{{ url_for('admin_logout') }}" class="btn btn-secondary" style="padding: 0.45rem 1rem; font-size: 0.82rem; background: #FEE2E2; color: #991B1B; border-color: #FCA5A5;">
+      Sair
+    </a>
+  </div>
+</header>
+
+<main class="admin-container">
+  
+  <!-- Alertas Flash -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div style="margin-bottom: 1.5rem; padding: 1rem 1.2rem; border-radius: var(--radius-md); background: {% if category == 'error' %}#FEE2E2; color: #991B1B; border: 1px solid #FCA5A5;{% else %}#D1FAE5; color: #065F46; border: 1px solid #6EE7B7;{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Cards de Estatísticas -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h4>Total Reservas</h4>
+        <div class="stat-card-number">{{ stats.total }}</div>
+      </div>
+      <div class="stat-icon total">📋</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h4>Pendentes</h4>
+        <div class="stat-card-number" style="color: #D97706;">{{ stats.pendentes }}</div>
+      </div>
+      <div class="stat-icon pendente">⏳</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h4>Confirmados</h4>
+        <div class="stat-card-number" style="color: #059669;">{{ stats.confirmados }}</div>
+      </div>
+      <div class="stat-icon confirmado">✓</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card-info">
+        <h4>Concluídos</h4>
+        <div class="stat-card-number" style="color: #4338CA;">{{ stats.concluidos }}</div>
+      </div>
+      <div class="stat-icon concluido">⭐</div>
+    </div>
+  </div>
+
+  <!-- Controles da Tabela: Filtros e Busca -->
+  <div class="table-controls">
+    <div class="status-filters">
+      <a href="{{ url_for('admin_reservas', status='Todos', busca=busca) }}" class="filter-chip {% if filtro_status == 'Todos' %}active{% endif %}">
+        Todos ({{ stats.total }})
+      </a>
+      <a href="{{ url_for('admin_reservas', status='Pendente', busca=busca) }}" class="filter-chip {% if filtro_status == 'Pendente' %}active{% endif %}">
+        Pendentes ({{ stats.pendentes }})
+      </a>
+      <a href="{{ url_for('admin_reservas', status='Confirmado', busca=busca) }}" class="filter-chip {% if filtro_status == 'Confirmado' %}active{% endif %}">
+        Confirmados ({{ stats.confirmados }})
+      </a>
+      <a href="{{ url_for('admin_reservas', status='Concluído', busca=busca) }}" class="filter-chip {% if filtro_status == 'Concluído' %}active{% endif %}">
+        Concluídos ({{ stats.concluidos }})
+      </a>
+      <a href="{{ url_for('admin_reservas', status='Cancelado', busca=busca) }}" class="filter-chip {% if filtro_status == 'Cancelado' %}active{% endif %}">
+        Cancelados ({{ stats.cancelados }})
+      </a>
+    </div>
+
+    <form action="{{ url_for('admin_reservas') }}" method="GET" class="search-form">
+      <input type="hidden" name="status" value="{{ filtro_status }}">
+      <input type="text" name="busca" value="{{ busca }}" class="search-input" placeholder="Buscar por nome, telefone ou e-mail...">
+      <button type="submit" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Buscar</button>
+      {% if busca %}
+        <a href="{{ url_for('admin_reservas', status=filtro_status) }}" class="btn btn-outline" style="padding: 0.5rem 0.8rem; font-size: 0.85rem;" title="Limpar busca">✕</a>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- Tabela de Reservas -->
+  <div class="table-wrapper">
+    {% if reservas %}
+    <table class="reservas-table">
+      <thead>
+        <tr>
+          <th>#ID</th>
+          <th>Cliente (Nome & E-mail)</th>
+          <th>Celular / WhatsApp</th>
+          <th>Procedimento</th>
+          <th>Data / Horário</th>
+          <th>Status Atual</th>
+          <th>Alterar Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in reservas %}
+        <tr>
+          <td style="font-weight: bold; color: var(--color-text-muted);">#{{ r.id }}</td>
+          <td>
+            <div class="client-cell">
+              <span class="client-name">{{ r.nome_completo }}</span>
+              <span class="client-email">{{ r.email }}</span>
+            </div>
+          </td>
+          <td>
+            {% set num_limpo = r.celular.replace('(', '').replace(')', '').replace(' ', '').replace('-', '') %}
+            {% if not num_limpo.startswith('55') %}
+              {% set num_whatsapp = '55' ~ num_limpo %}
+            {% else %}
+              {% set num_whatsapp = num_limpo %}
+            {% endif %}
+            
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span>{{ r.celular }}</span>
+              <a href="https://wa.me/{{ num_whatsapp }}?text=Ol%C3%A1%20{{ r.nome_completo }}!%20Aqui%20%C3%A9%20da%20cl%C3%ADnica%20est%C3%A9tica%20em%20Nova%20Mutum.%20Recebemos%20sua%20solicita%C3%A7%C3%A3o%20de%20{{ r.servico }}!" target="_blank" class="btn-table-action btn-whatsapp-sm" title="Conversar no WhatsApp">
+                💬 WhatsApp
+              </a>
+            </div>
+          </td>
+          <td>
+            <span style="font-weight: 500;">{{ r.servico }}</span>
+            {% if r.observacoes %}
+              <div style="font-size: 0.78rem; color: var(--color-text-light); margin-top: 0.2rem; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ r.observacoes }}">
+                Obs: {{ r.observacoes }}
+              </div>
+            {% endif %}
+          </td>
+          <td>
+            <div><strong>{{ r.data_preferencial or 'A combinar' }}</strong></div>
+            <div style="font-size: 0.8rem; color: var(--color-text-light);">{{ r.horario_preferencial or 'Qualquer horário' }}</div>
+          </td>
+          <td>
+            {% if r.status == 'Pendente' %}
+              <span class="badge-status badge-pendente">Pendente</span>
+            {% elif r.status == 'Confirmado' %}
+              <span class="badge-status badge-confirmado">Confirmado</span>
+            {% elif r.status == 'Concluído' %}
+              <span class="badge-status badge-concluido">Concluído</span>
+            {% else %}
+              <span class="badge-status badge-cancelado">Cancelado</span>
+            {% endif %}
+          </td>
+          <td>
+            <form action="{{ url_for('atualizar_status_reserva', agendamento_id=r.id) }}" method="POST" style="display: inline-flex; align-items: center; gap: 0.4rem;">
+              <select name="status" class="status-select" onchange="this.form.submit()">
+                <option value="Pendente" {% if r.status == 'Pendente' %}selected{% endif %}>Pendente</option>
+                <option value="Confirmado" {% if r.status == 'Confirmado' %}selected{% endif %}>Confirmado</option>
+                <option value="Concluído" {% if r.status == 'Concluído' %}selected{% endif %}>Concluído</option>
+                <option value="Cancelado" {% if r.status == 'Cancelado' %}selected{% endif %}>Cancelado</option>
+              </select>
+            </form>
+          </td>
+          <td>
+            <div class="actions-cell">
+              <form action="{{ url_for('excluir_reserva', agendamento_id=r.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir o agendamento de {{ r.nome_completo }}?');">
+                <button type="submit" class="btn-table-action" style="color: #DC2626;" title="Excluir agendamento">
+                  🗑️
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <div style="font-size: 3rem; margin-bottom: 0.8rem;">📅</div>
+      <h3 style="font-size: 1.3rem; margin-bottom: 0.4rem; color: var(--color-text-main);">Nenhum agendamento encontrado</h3>
+      <p style="font-size: 0.95rem;">
+        {% if busca %}
+          Nenhum resultado para a busca "{{ busca }}". <a href="{{ url_for('admin_reservas') }}" style="color: var(--color-primary); text-decoration: underline;">Limpar filtro</a>.
+        {% else %}
+          Quando os clientes preencherem o formulário da landing page, as reservas aparecerão aqui automaticamente.
+        {% endif %}
+      </p>
+    </div>
+    {% endif %}
+  </div>
+
+</main>
+{% endblock %}

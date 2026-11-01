@@ -1,0 +1,333 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Header & Navegação -->
+<header class="site-header">
+  <div class="header-container">
+    <a href="{{ url_for('index') }}" class="brand-logo">
+      <span class="brand-title">Estética Duda</span>
+      <span class="brand-subtitle">Facial & Skin Care • Nova Mutum MT</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#procedimentos" class="nav-link">Procedimentos</a></li>
+      <li><a href="#diferenciais" class="nav-link">Diferenciais</a></li>
+      <li><a href="#localizacao" class="nav-link">Nova Mutum</a></li>
+      <li><a href="#agendamento" class="nav-link">Agendamento</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <a href="#agendamento" class="btn btn-primary">Agendar Sessão</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>✨</span> Atendimento Especializado em Nova Mutum - MT
+    </div>
+    
+    <h1 class="hero-title">
+      Sua pele radiante, saudável e <span>livre de impurezas</span>.
+    </h1>
+
+    <p class="hero-description">
+      Protocolos personalizados de <strong>Limpeza de Pele Profunda</strong> e cuidados faciais que respeitam a individualidade da sua pele, promovendo renovação celular, desobstrução de poros e viço imediato.
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="#agendamento" class="btn btn-primary">Reservar Meu Horário</a>
+      <a href="https://wa.me/{{ whatsapp_clinica }}?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20hor%C3%A1rio%20na%20Est%C3%A9tica%20Duda" target="_blank" class="btn btn-whatsapp">
+        <span>💬</span> Conversar no WhatsApp
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <h4>100%</h4>
+        <p>Técnica cuidadosa e indolor</p>
+      </div>
+      <div class="stat-item">
+        <h4>Grau Médico</h4>
+        <p>Biossegurança & descartáveis</p>
+      </div>
+      <div class="stat-item">
+        <h4>Nova Mutum</h4>
+        <p>Localização central e discreta</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-card">
+      <div class="visual-content">
+        <span class="profile-tag">Experiência & Cuidado</span>
+        <h3 style="font-size: 1.8rem; margin-bottom: 0.8rem;">Avaliação Cutânea Personalizada</h3>
+        <p style="font-size: 0.95rem; color: var(--color-text-muted);">
+          Antes de qualquer procedimento, realizamos uma análise detalhada do seu tipo de pele para indicar o melhor protocolo em Nova Mutum.
+        </p>
+
+        <div class="visual-highlight-box">
+          <p>"Uma limpeza de pele bem executada não agride: ela revitaliza, equilibra a oleosidade e renova a sua autoestima."</p>
+        </div>
+
+        <ul class="visual-features-list">
+          <li><span class="check-icon">✓</span> Emoliência com ozônio e ativos calmantes</li>
+          <li><span class="check-icon">✓</span> Extração minuciosa sem marcar a pele</li>
+          <li><span class="check-icon">✓</span> Alta frequência bactericida e cicatrizante</li>
+          <li><span class="check-icon">✓</span> Máscaras oclusivas tensoras e hidratantes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Seção Procedimentos -->
+<section id="procedimentos" class="section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Tratamentos Exclusivos</span>
+      <h2 class="section-title">Protocolos Faciais de Alta Performance</h2>
+      <p class="section-subtitle">
+        Procedimentos desenvolvidos com dermocosméticos de ponta para proporcionar resultados visíveis desde a primeira sessão.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      {% for servico in servicos %}
+      <div class="service-card">
+        <span class="service-badge">{{ servico.destaque }}</span>
+        <div class="service-icon-box">✦</div>
+        <div>
+          <h3 class="service-name">{{ servico.nome }}</h3>
+          <div class="service-duration">
+            <span>⏱</span> Duração média: {{ servico.duracao }}
+          </div>
+          <p class="service-desc">{{ servico.descricao }}</p>
+        </div>
+        <a href="#agendamento" class="btn btn-outline btn-card-select btn-select-service" data-service-name="{{ servico.nome }}">
+          Agendar Este Procedimento
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Seção Diferenciais -->
+<section id="diferenciais" class="section" style="background-color: var(--color-surface-soft);">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">Por Que Escolher Nosso Espaço</span>
+      <h2 class="section-title">Excelência em Cada Detalhe</h2>
+      <p class="section-subtitle">
+        Proporcionamos um momento de relaxamento e autocuidado com rigor técnico e biossegurança.
+      </p>
+    </div>
+
+    <div class="differentials-grid">
+      <div class="diff-card">
+        <div class="diff-icon">🛡️</div>
+        <h3>Biossegurança Absoluta</h3>
+        <p>Todos os instrumentais passam por esterilização rigorosa e materiais de contato são 100% descartáveis.</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-icon">🌿</div>
+        <h3>Dermocosméticos Premium</h3>
+        <p>Utilização exclusiva de produtos hipoalergênicos e fórmulas botânicas de alta tecnologia dermatológica.</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-icon">✨</div>
+        <h3>Extração Confortável</h3>
+        <p>Técnicas emolientes inovadoras que minimizam a dor e previnem vermelhidão excessiva pós-sessão.</p>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-icon">📍</div>
+        <h3>Pertinho de Você</h3>
+        <p>Localização conveniente em Nova Mutum com ambiente calmo, climatizado e atendimento com hora marcada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Seção Agendamento & Formulário -->
+<section id="agendamento" class="section booking-section">
+  <div class="section-container">
+    <div class="booking-wrapper">
+      <div class="booking-intro">
+        <span class="section-tag">Agendamento Online</span>
+        <h2 class="section-title" style="font-size: 2.3rem;">Solicite Sua Reserva</h2>
+        <p class="section-subtitle">
+          Preencha os dados abaixo para reservar o seu atendimento na clínica estética em Nova Mutum.
+        </p>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div style="margin-bottom: 1.5rem; padding: 1rem; border-radius: var(--radius-md); background: {% if category == 'error' %}#FEE2E2; color: #991B1B;{% else %}#D1FAE5; color: #065F46;{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form action="{{ url_for('agendar') }}" method="POST" id="form-agendamento">
+        <div class="form-grid">
+          <!-- Nome Completo -->
+          <div class="form-group">
+            <label for="nome_completo" class="form-label">Nome Completo <span class="req">*</span></label>
+            <input type="text" id="nome_completo" name="nome_completo" class="form-control" placeholder="Ex: Maria Eduarda Silva" required>
+          </div>
+
+          <!-- Celular / WhatsApp -->
+          <div class="form-group">
+            <label for="celular" class="form-label">Número de Celular / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="celular" name="celular" class="form-control" placeholder="(66) 99999-9999" required>
+          </div>
+
+          <!-- E-mail -->
+          <div class="form-group">
+            <label for="email" class="form-label">E-mail <span class="req">*</span></label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="seuemail@exemplo.com" required>
+          </div>
+
+          <!-- Procedimento -->
+          <div class="form-group">
+            <label for="servico" class="form-label">Procedimento Desejado <span class="req">*</span></label>
+            <select id="servico" name="servico" class="form-control" required>
+              <option value="Limpeza de Pele Profunda">Limpeza de Pele Profunda</option>
+              <option value="Limpeza com Peeling de Diamante">Limpeza com Peeling de Diamante</option>
+              <option value="Protocolo Anti-Acne e Desintoxicante">Protocolo Anti-Acne e Desintoxicante</option>
+              <option value="Revitalização & Hidratação de Ouro">Revitalização & Hidratação de Ouro</option>
+              <option value="Avaliação Facial Completa">Avaliação Facial Completa</option>
+            </select>
+          </div>
+
+          <!-- Data Preferencial -->
+          <div class="form-group">
+            <label for="data_preferencial" class="form-label">Data Preferencial</label>
+            <input type="date" id="data_preferencial" name="data_preferencial" class="form-control">
+          </div>
+
+          <!-- Horário / Turno -->
+          <div class="form-group">
+            <label for="horario_preferencial" class="form-label">Turno / Horário Desejado</label>
+            <select id="horario_preferencial" name="horario_preferencial" class="form-control">
+              <option value="">Selecione o horário desejado...</option>
+              <option value="12:30 às 16:00 (Seg, Qua ou Sex)">12:30 às 16:00 (Segunda, Quarta ou Sexta)</option>
+              <option value="09:00 às 11:00 (Ter ou Qui)">09:00 às 11:00 (Terça ou Quinta - Manhã)</option>
+              <option value="12:30 às 16:00 (Ter ou Qui)">12:30 às 16:00 (Terça ou Quinta - Tarde)</option>
+              <option value="A combinar">A combinar com a esteticista</option>
+            </select>
+          </div>
+
+          <!-- Observações -->
+          <div class="form-group full-width">
+            <label for="observacoes" class="form-label">Alguma observação sobre sua pele ou preferência?</label>
+            <textarea id="observacoes" name="observacoes" class="form-control" placeholder="Ex: Pele sensível com tendência a acne, alergia a algum produto, ou melhor dia da semana..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-submit-container">
+          <button type="submit" class="btn btn-primary" style="font-size: 1.05rem; padding: 1rem 2.8rem;">
+            Confirmar e Enviar Reserva
+          </button>
+          <p class="form-hint">🔒 Seus dados estão seguros e entraremos em contato para confirmação da vaga.</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Seção Localização Nova Mutum -->
+<section id="localizacao" class="section">
+  <div class="section-container">
+    <div class="location-card">
+      <div class="location-info">
+        <span class="section-tag">Atendimento Local</span>
+        <h3>Clínica Estética em Nova Mutum - MT</h3>
+        <p>
+          Atendimento privativo e exclusivo, preparado para proporcionar tranquilidade e bem-estar no coração de Nova Mutum.
+        </p>
+
+        <ul class="location-details">
+          <li>
+            <span>📍</span>
+            <div><strong>Cidade:</strong> Nova Mutum - Mato Grosso (MT)</div>
+          </li>
+          <li>
+            <span>⏰</span>
+            <div>
+              <strong>Horários de Funcionamento:</strong><br>
+              • <strong>Segunda, Quarta e Sexta:</strong> 12:30 às 16:00<br>
+              • <strong>Terça e Quinta:</strong> 09:00 às 11:00 | 12:30 às 16:00
+            </div>
+          </li>
+          <li>
+            <span>📞</span>
+            <div><strong>WhatsApp:</strong> +55 (65) 9964-4755</div>
+          </li>
+          <li>
+            <span>✉️</span>
+            <div><strong>E-mail:</strong> <a href="mailto:{{ email_contato }}" style="color: var(--color-primary-dark); text-decoration: underline;">{{ email_contato }}</a></div>
+          </li>
+        </ul>
+
+        <a href="https://wa.me/{{ whatsapp_clinica }}?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento%20na%20Est%C3%A9tica%20Duda" target="_blank" class="btn btn-whatsapp" style="margin-right: 0.8rem;">
+          <span>💬</span> Falar Direto no WhatsApp
+        </a>
+        <a href="#agendamento" class="btn btn-secondary">Preencher Formulário</a>
+      </div>
+
+      <div class="location-map-placeholder">
+        <span style="font-size: 2.8rem; margin-bottom: 0.8rem;">🗺️</span>
+        <h4 style="font-size: 1.3rem; margin-bottom: 0.4rem;">Nova Mutum - MT</h4>
+        <p style="font-size: 0.9rem; max-width: 320px;">
+          Espaço aconchegante com estacionamento fácil e estrutura moderna para o seu autocuidado.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <h4>Estética Duda</h4>
+      <p style="color: #A39B96; margin-top: 0.4rem;">Especialista em Limpeza de Pele & Estética Facial em Nova Mutum - MT</p>
+      <p style="color: #D4AF37; font-size: 0.9rem; margin-top: 0.3rem;">✉️ {{ email_contato }}</p>
+    </div>
+
+    <div>
+      <a href="https://wa.me/{{ whatsapp_clinica }}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Est%C3%A9tica%20Duda" target="_blank" class="btn btn-whatsapp">
+        <span>💬</span> WhatsApp Oficial
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 Estética Duda. Todos os direitos reservados. Nova Mutum - MT.</p>
+    <div>
+      <a href="{{ url_for('admin_reservas') }}" class="admin-link">Acesso Administrativo (Painel de Reservas)</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Botão Flutuante de WhatsApp -->
+<a href="https://wa.me/{{ whatsapp_clinica }}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Est%C3%A9tica%20Duda%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." 
+   target="_blank" 
+   class="floating-whatsapp" 
+   title="Conversar com a Estética Duda no WhatsApp">
+  <svg viewBox="0 0 24 24">
+    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.585 1.961.895 2.791.895 3.181 0 5.767-2.587 5.767-5.766.001-3.181-2.585-5.781-5.767-5.781zm3.389 8.163c-.143.404-.716.745-1.002.771-.286.026-.643.143-2.029-.408-1.637-.65-2.696-2.315-2.778-2.423-.082-.109-.657-.872-.657-1.664 0-.792.417-1.181.565-1.341.148-.16.326-.2.434-.2.109 0 .218.001.314.006.101.005.236-.038.369.281.139.333.477 1.164.519 1.25.042.086.07.187.013.3-.058.114-.087.185-.173.286-.086.102-.182.227-.26.305-.088.087-.179.182-.077.357.102.175.454.749.974 1.213.67.596 1.235.781 1.41.868.175.087.278.073.382-.047.104-.12.444-.517.562-.693.118-.175.236-.146.398-.087.161.059 1.026.484 1.202.572.175.087.293.131.336.205.044.073.044.428-.099.832z"/>
+  </svg>
+  <span class="btn-text">Falar no WhatsApp</span>
+</a>
+{% endblock %}
